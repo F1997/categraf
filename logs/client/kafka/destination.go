@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Shopify/sarama"
+	"github.com/IBM/sarama"
 	json "github.com/mailru/easyjson"
 
 	coreconfig "github.com/F1997/categraf/config"

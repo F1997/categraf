@@ -9,9 +9,9 @@ import (
 )
 
 func (ins *Instance) gatherInfoSchemaRuntime(slist *types.SampleList, db *sql.DB, globalTags map[string]string) {
-	if !ins.GatherSchemaSize {
-		return
-	}
+	// if !ins.GatherSchemaSize {
+	// 	return
+	// }
 
 	rows, err := db.Query(SQL_RUN_TIME)
 	if err != nil {
@@ -32,6 +32,6 @@ func (ins *Instance) gatherInfoSchemaRuntime(slist *types.SampleList, db *sql.DB
 			return
 		}
 
-		slist.PushFront(types.NewSample(inputName, "info_schema_runtime", runtime))
+		slist.PushFront(types.NewSample(inputName, "info_schema_runtime", runtime, labels))
 	}
 }

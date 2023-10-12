@@ -11,7 +11,7 @@ import (
 	"github.com/F1997/categraf/inputs"
 	"github.com/F1997/categraf/inputs/kafka/exporter"
 	"github.com/F1997/categraf/types"
-	"github.com/Shopify/sarama"
+	"github.com/IBM/sarama"
 	"github.com/go-kit/log/level"
 
 	klog "github.com/go-kit/log"

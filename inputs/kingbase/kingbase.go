@@ -14,7 +14,7 @@ import (
 	"github.com/F1997/categraf/types"
 
 	// "github.com/go-sql-driver/mysql"
-	_ "github.com/F1997/categraf/pkg/gokb"
+	_ "github.com/F1997/gokb"
 )
 
 const inputName = "kingbase"
@@ -44,20 +44,20 @@ type Instance struct {
 	Queries       []QueryConfig `toml:"queries"`
 	GlobalQueries []QueryConfig `toml:"-"`
 
-	ExtraStatusMetrics              bool `toml:"extra_status_metrics"`
-	ExtraInnodbMetrics              bool `toml:"extra_innodb_metrics"`
-	GatherProcessListProcessByState bool `toml:"gather_processlist_processes_by_state"`
-	GatherProcessListProcessByUser  bool `toml:"gather_processlist_processes_by_user"`
-	GatherSchemaSize                bool `toml:"gather_schema_size"`
-	GatherTableSize                 bool `toml:"gather_table_size"`
-	GatherSystemTableSize           bool `toml:"gather_system_table_size"`
-	GatherSlaveStatus               bool `toml:"gather_slave_status"`
+	// ExtraStatusMetrics              bool `toml:"extra_status_metrics"`
+	// ExtraInnodbMetrics              bool `toml:"extra_innodb_metrics"`
+	// GatherProcessListProcessByState bool `toml:"gather_processlist_processes_by_state"`
+	// GatherProcessListProcessByUser  bool `toml:"gather_processlist_processes_by_user"`
+	// GatherSchemaSize                bool `toml:"gather_schema_size"`
+	// GatherTableSize                 bool `toml:"gather_table_size"`
+	// GatherSystemTableSize           bool `toml:"gather_system_table_size"`
+	// GatherSlaveStatus               bool `toml:"gather_slave_status"`
 
-	DisableGlobalStatus      bool `toml:"disable_global_status"`
-	DisableGlobalVariables   bool `toml:"disable_global_variables"`
-	DisableInnodbStatus      bool `toml:"disable_innodb_status"`
-	DisableExtraInnodbStatus bool `toml:"disable_extra_innodb_status"`
-	DisablebinLogs           bool `toml:"disable_binlogs"`
+	// DisableGlobalStatus      bool `toml:"disable_global_status"`
+	// DisableGlobalVariables   bool `toml:"disable_global_variables"`
+	// DisableInnodbStatus      bool `toml:"disable_innodb_status"`
+	// DisableExtraInnodbStatus bool `toml:"disable_extra_innodb_status"`
+	// DisablebinLogs           bool `toml:"disable_binlogs"`
 
 	validMetrics map[string]struct{}
 	dsn          string
@@ -109,61 +109,61 @@ func (ins *Instance) Init() error {
 func (ins *Instance) InitValidMetrics() {
 	ins.validMetrics = make(map[string]struct{})
 
-	for key := range STATUS_VARS {
-		ins.validMetrics[key] = struct{}{}
-	}
+	// for key := range STATUS_VARS {
+	// 	ins.validMetrics[key] = struct{}{}
+	// }
 
-	for key := range VARIABLES_VARS {
-		ins.validMetrics[key] = struct{}{}
-	}
+	// for key := range VARIABLES_VARS {
+	// 	ins.validMetrics[key] = struct{}{}
+	// }
 
-	for key := range INNODB_VARS {
-		ins.validMetrics[key] = struct{}{}
-	}
+	// for key := range INNODB_VARS {
+	// 	ins.validMetrics[key] = struct{}{}
+	// }
 
-	for key := range BINLOG_VARS {
-		ins.validMetrics[key] = struct{}{}
-	}
+	// for key := range BINLOG_VARS {
+	// 	ins.validMetrics[key] = struct{}{}
+	// }
 
-	for key := range GALERA_VARS {
-		ins.validMetrics[key] = struct{}{}
-	}
+	// for key := range GALERA_VARS {
+	// 	ins.validMetrics[key] = struct{}{}
+	// }
 
-	for key := range PERFORMANCE_VARS {
-		ins.validMetrics[key] = struct{}{}
-	}
+	// for key := range PERFORMANCE_VARS {
+	// 	ins.validMetrics[key] = struct{}{}
+	// }
 
-	for key := range SCHEMA_VARS {
-		ins.validMetrics[key] = struct{}{}
-	}
+	// for key := range SCHEMA_VARS {
+	// 	ins.validMetrics[key] = struct{}{}
+	// }
 
-	for key := range TABLE_VARS {
-		ins.validMetrics[key] = struct{}{}
-	}
+	// for key := range TABLE_VARS {
+	// 	ins.validMetrics[key] = struct{}{}
+	// }
 
-	for key := range REPLICA_VARS {
-		ins.validMetrics[key] = struct{}{}
-	}
+	// for key := range REPLICA_VARS {
+	// 	ins.validMetrics[key] = struct{}{}
+	// }
 
-	for key := range GROUP_REPLICATION_VARS {
-		ins.validMetrics[key] = struct{}{}
-	}
+	// for key := range GROUP_REPLICATION_VARS {
+	// 	ins.validMetrics[key] = struct{}{}
+	// }
 
-	for key := range SYNTHETIC_VARS {
-		ins.validMetrics[key] = struct{}{}
-	}
+	// for key := range SYNTHETIC_VARS {
+	// 	ins.validMetrics[key] = struct{}{}
+	// }
 
-	if ins.ExtraStatusMetrics {
-		for key := range OPTIONAL_STATUS_VARS {
-			ins.validMetrics[key] = struct{}{}
-		}
-	}
+	// if ins.ExtraStatusMetrics {
+	// 	for key := range OPTIONAL_STATUS_VARS {
+	// 		ins.validMetrics[key] = struct{}{}
+	// 	}
+	// }
 
-	if ins.ExtraInnodbMetrics {
-		for key := range OPTIONAL_INNODB_VARS {
-			ins.validMetrics[key] = struct{}{}
-		}
-	}
+	// if ins.ExtraInnodbMetrics {
+	// 	for key := range OPTIONAL_INNODB_VARS {
+	// 		ins.validMetrics[key] = struct{}{}
+	// 	}
+	// }
 }
 
 // Catagraf 插件的配置，多个 Instance 实例，每个实例代表了一个 KingBase 数据库的连接

@@ -3,7 +3,7 @@
 package config
 
 import (
-	"github.com/Shopify/sarama"
+	"github.com/IBM/sarama"
 
 	logsconfig "github.com/F1997/categraf/config/logs"
 )
