@@ -8,12 +8,12 @@ import (
 	"github.com/F1997/categraf/types"
 )
 
-func (ins *Instance) gatherInfoSchemaRuntime(slist *types.SampleList, db *sql.DB, globalTags map[string]string) {
+func (ins *Instance) gatherSchemaSize(slist *types.SampleList, db *sql.DB, globalTags map[string]string) {
 	if !ins.GatherSchemaSize {
 		return
 	}
 
-	rows, err := db.Query(SQL_RUN_TIME)
+	rows, err := db.Query(SQL_SYS_DATABASE_SIZE)
 	if err != nil {
 		log.Println("E! failed to get schema size of", ins.Address, err)
 		return
@@ -24,14 +24,15 @@ func (ins *Instance) gatherInfoSchemaRuntime(slist *types.SampleList, db *sql.DB
 	labels := tagx.Copy(globalTags)
 
 	for rows.Next() {
-		var runtime string
+		var schema string
+		var size int64
 
-		err = rows.Scan(&runtime)
+		err = rows.Scan(&schema, &size)
 		if err != nil {
 			log.Println("E! failed to scan rows of", ins.Address, err)
 			return
 		}
 
-		slist.PushFront(types.NewSample(inputName, "info_schema_runtime", runtime, labels))
+		slist.PushFront(types.NewSample(inputName, "schema_size_bytes", size, labels, map[string]string{"schema": schema}))
 	}
 }

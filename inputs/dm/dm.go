@@ -1,3 +1,6 @@
+package dm
+
+
 package kingbase
 
 import (
@@ -17,7 +20,7 @@ import (
 	_ "github.com/F1997/gokb"
 )
 
-const inputName = "kingbase"
+const inputName = "dm"
 
 // 定义了要查询的数据指标的配置
 type QueryConfig struct {
@@ -48,13 +51,13 @@ type Instance struct {
 	// ExtraInnodbMetrics              bool `toml:"extra_innodb_metrics"`
 	// GatherProcessListProcessByState bool `toml:"gather_processlist_processes_by_state"`
 	// GatherProcessListProcessByUser  bool `toml:"gather_processlist_processes_by_user"`
-	GatherSchemaSize bool `toml:"gather_schema_size"`
+	// GatherSchemaSize                bool `toml:"gather_schema_size"`
 	// GatherTableSize                 bool `toml:"gather_table_size"`
 	// GatherSystemTableSize           bool `toml:"gather_system_table_size"`
 	// GatherSlaveStatus               bool `toml:"gather_slave_status"`
 
-	DisableGlobalStatus    bool `toml:"disable_global_status"`
-	DisableGlobalVariables bool `toml:"disable_global_variables"`
+	// DisableGlobalStatus      bool `toml:"disable_global_status"`
+	// DisableGlobalVariables   bool `toml:"disable_global_variables"`
 	// DisableInnodbStatus      bool `toml:"disable_innodb_status"`
 	// DisableExtraInnodbStatus bool `toml:"disable_extra_innodb_status"`
 	// DisablebinLogs           bool `toml:"disable_binlogs"`
