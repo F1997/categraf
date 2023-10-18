@@ -12,11 +12,11 @@ interval = 15
 
 
 [[instances]]
-address = "127.0.0.1:54321"
-username = "SYSTEM"
-password = ""
-dbname = ""
-sslmode ="false"
+address = "39.102.126.252"
+username = "system"
+password = "fzx*3413"
+dbname = "test"
+sslmode ="disable"
 
 
 # set tls=custom to enable tls
@@ -38,7 +38,7 @@ timeout_seconds = 3
 interval_times = 1
 
 # important! use global unique string to specify instance
-labels = { instance="kingbase-172.26.110.186:54321" }
+labels = { instance="kingbase-39.102.126.252:54321" }
 
 # Optional TLS Config
 use_tls = false

@@ -1,8 +1,5 @@
 package dm
 
-
-package kingbase
-
 import (
 	"database/sql"
 	"fmt"
@@ -17,7 +14,7 @@ import (
 	"github.com/F1997/categraf/types"
 
 	// "github.com/go-sql-driver/mysql"
-	_ "github.com/F1997/gokb"
+	_ "github.com/F1997/dm"
 )
 
 const inputName = "dm"
@@ -36,11 +33,11 @@ type QueryConfig struct {
 type Instance struct {
 	config.InstanceConfig
 
-	Address        string `toml:"address"`
-	Username       string `toml:"username"`
-	Password       string `toml:"password"`
-	DBname         string `toml:"dbname"`
-	Sslmode        string `toml:"sslmode"`
+	Address  string `toml:"address"`
+	Username string `toml:"username"`
+	Password string `toml:"password"`
+	// DBname         string `toml:"dbname"`
+	Port           int64  `toml:"prot"`
 	Parameters     string `toml:"parameters"`
 	TimeoutSeconds int64  `toml:"timeout_seconds"`
 
@@ -101,7 +98,7 @@ func (ins *Instance) Init() error {
 
 	// ins.dsn = conf.FormatDSN()
 
-	ins.dsn = fmt.Sprintf("host=? user=? password=? dbname=? sslmode=?", ins.Address, ins.Username, ins.Password, ins.DBname, ins.Sslmode)
+	ins.dsn = fmt.Sprintf("dm://?:?@?:?", ins.Username, ins.Password, ins.Address, ins.Port)
 
 	ins.InitValidMetrics()
 
@@ -203,7 +200,7 @@ func (k *KingBase) GetInstances() []inputs.Instance {
 	return ret
 }
 
-// 收集 KingBase 数据库的各种指标，并将它们推送到 Catagraf 的 SampleList 中
+// 收集 DM 数据库的各种指标，并将它们推送到 Catagraf 的 SampleList 中
 func (ins *Instance) Gather(slist *types.SampleList) {
 	tags := map[string]string{"address": ins.Address}
 
@@ -215,7 +212,8 @@ func (ins *Instance) Gather(slist *types.SampleList) {
 		slist.PushSample(inputName, "scrape_use_seconds", use, tags)
 	}(begun)
 
-	db, err := sql.Open("kingbase", ins.dsn)
+	// 登陆 DM8 数据库
+	db, err := sql.Open("dm", ins.dsn)
 	if err != nil {
 		slist.PushSample(inputName, "up", 0, tags)
 		log.Println("E! failed to open kingbase:", err)
@@ -224,9 +222,9 @@ func (ins *Instance) Gather(slist *types.SampleList) {
 
 	defer db.Close()
 
-	db.SetMaxOpenConns(1)
-	db.SetMaxIdleConns(1)
-	db.SetConnMaxLifetime(time.Minute)
+	// db.SetMaxOpenConns(1)
+	// db.SetMaxIdleConns(1)
+	// db.SetConnMaxLifetime(time.Minute)
 
 	if err = db.Ping(); err != nil {
 		slist.PushSample(inputName, "up", 0, tags)
@@ -236,20 +234,15 @@ func (ins *Instance) Gather(slist *types.SampleList) {
 
 	slist.PushSample(inputName, "up", 1, tags)
 
-	// cache := make(map[string]float64)
+	ins.gatherSchemaStatus(slist, db, tags)
+	ins.gatherTableSizeRate(slist, db, tags)
+	ins.gatherTableSizeUseRate(slist, db, tags)
+	ins.gatherMemoryUsage(slist, db, tags)
 
-	ins.gatherInfoSchemaRuntime(slist, db, tags)
+	ins.gatherSchemaConnectionNums(slist, db, tags)
+	ins.gatherSystemInfo(slist, db, tags)
 
-	// ins.gatherGlobalStatus(slist, db, tags, cache)
-	// ins.gatherGlobalVariables(slist, db, tags, cache)
-	// ins.gatherEngineInnodbStatus(slist, db, tags, cache)
-	// ins.gatherEngineInnodbStatusCompute(slist, db, tags, cache)
-	// ins.gatherBinlog(slist, db, tags)
-	// ins.gatherProcesslistByState(slist, db, tags)
-	// ins.gatherProcesslistByUser(slist, db, tags)
-	// ins.gatherSchemaSize(slist, db, tags)
-	// ins.gatherTableSize(slist, db, tags, false)
-	// ins.gatherTableSize(slist, db, tags, true)
-	// ins.gatherSlaveStatus(slist, db, tags)
-	// ins.gatherCustomQueries(slist, db, tags)
+	ins.gatherInfoSchemaBasic(slist, db, tags)
+	ins.gatherInfoSchemaThread(slist, db, tags)
+
 }

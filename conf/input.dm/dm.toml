@@ -12,12 +12,11 @@ interval = 15
 
 
 [[instances]]
-address = "127.0.0.1:54321"
-username = "SYSTEM"
-password = ""
+address = "127.0.0.1"
+port = "5236"
+username = "sysdba"
+password = "SYSDBA"
 dbname = ""
-sslmode ="false"
-
 
 # set tls=custom to enable tls
 parameters = "tls=false"
@@ -38,7 +37,7 @@ timeout_seconds = 3
 interval_times = 1
 
 # important! use global unique string to specify instance
-labels = { instance="kingbase-172.26.110.186:54321" }
+labels = { instance="DM-172.26.110.186:5236" }
 
 # Optional TLS Config
 use_tls = false

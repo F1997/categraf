@@ -117,6 +117,7 @@ require (
 
 require (
 	cloud.google.com/go/monitoring v1.12.0
+	github.com/F1997/dm v0.0.0-20231016073343-a9b3c9bc9035
 	github.com/F1997/gokb v0.0.0-20231012084225-1c7ec7894ed1
 	github.com/IBM/sarama v1.41.2
 	github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible

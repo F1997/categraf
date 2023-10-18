@@ -100,6 +100,8 @@ func (ins *Instance) Init() error {
 
 	ins.dsn = fmt.Sprintf("host=? user=? password=? dbname=? sslmode=?", ins.Address, ins.Username, ins.Password, ins.DBname, ins.Sslmode)
 
+	// panic(ins.dsn)
+
 	ins.InitValidMetrics()
 
 	return nil
@@ -233,18 +235,18 @@ func (ins *Instance) Gather(slist *types.SampleList) {
 
 	slist.PushSample(inputName, "up", 1, tags)
 
-	// cache := make(map[string]float64)
+	cache := make(map[string]float64)
 
 	ins.gatherInfoSchemaRuntime(slist, db, tags)
 
-	// ins.gatherGlobalStatus(slist, db, tags, cache)
-	// ins.gatherGlobalVariables(slist, db, tags, cache)
+	ins.gatherGlobalStatus(slist, db, tags, cache)
+	ins.gatherGlobalVariables(slist, db, tags, cache)
 	// ins.gatherEngineInnodbStatus(slist, db, tags, cache)
 	// ins.gatherEngineInnodbStatusCompute(slist, db, tags, cache)
 	// ins.gatherBinlog(slist, db, tags)
 	// ins.gatherProcesslistByState(slist, db, tags)
 	// ins.gatherProcesslistByUser(slist, db, tags)
-	// ins.gatherSchemaSize(slist, db, tags)
+	ins.gatherSchemaSize(slist, db, tags)
 	// ins.gatherTableSize(slist, db, tags, false)
 	// ins.gatherTableSize(slist, db, tags, true)
 	// ins.gatherSlaveStatus(slist, db, tags)
