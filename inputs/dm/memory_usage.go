@@ -26,8 +26,8 @@ func (ins *Instance) gatherMemoryUsage(slist *types.SampleList, db *sql.DB, glob
 
 	for rows.Next() {
 		var name string
-		var total_mb sql.NullInt64
-		var mem_pool sql.NullInt64
+		var total_mb float64
+		var mem_pool int
 
 		err = rows.Scan(&name, &total_mb, &mem_pool)
 		if err != nil {

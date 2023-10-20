@@ -92,16 +92,21 @@ const (
 	// `
 
 	// 内存池使用情况
+	// SQL_MEMORY_USAGE = `
+	// 	select 'TOTAL' as NAME,(sum(total_size)/1024/1024) as TOTAL_MB ,NULL as mem_pool
+	// 	from v$mem_pool
+	// 	union all
+	// 	select * from (
+	// 	select name,sum(total_size)/1024/1024 as TOTAL,count(1) as count
+	// 	from v$mem_pool group by name order by 2 desc
+	// 	) where TOTAL>0;
+	// `
 	SQL_MEMORY_USAGE = `
-		select 'TOTAL' as NAME,(sum(total_size)/1024/1024) as TOTAL_MB ,NULL as mem_pool 
-		from v$mem_pool 
-		union all
 		select * from (
 		select name,sum(total_size)/1024/1024 as TOTAL,count(1) as count 
 		from v$mem_pool group by name order by 2 desc
 		) where TOTAL>0;
 	`
-
 	// // 用户状态
 	// SQL_USER_STATUS = `
 	// 	select username,account_status from dba_users where account_status <> 'OPEN';
