@@ -37,13 +37,13 @@ func (ins *Instance) gatherSystemInfo(slist *types.SampleList, db *sql.DB, globa
 		var driver_name sql.NullString
 		var driver_total_size sql.NullInt64
 		var driver_free_size sql.NullInt64
-		var load_one_average int64
-		var load_five_average int64
-		var load_fifteen_average int64
+		var load_one_average float64
+		var load_five_average float64
+		var load_fifteen_average float64
 
-		var cpu_user_rate int64
-		var cpu_system_rate int64
-		var cpu_idle_rate int64
+		var cpu_user_rate float64
+		var cpu_system_rate float64
+		var cpu_idle_rate float64
 		var send_bytes_total int64
 		var receive_bytes_total int64
 		var send_bytes_per_second int64
@@ -89,7 +89,7 @@ func (ins *Instance) gatherSystemInfo(slist *types.SampleList, db *sql.DB, globa
 		slist.PushFront(types.NewSample(inputName, "free_vir_size", free_vir_size, labels))
 		slist.PushFront(types.NewSample(inputName, "total_disk_size", total_disk_size, labels))
 		slist.PushFront(types.NewSample(inputName, "free_disk_size", free_disk_size, labels))
-		slist.PushFront(types.NewSample(inputName, "driver_name", driver_name, labels))
+		// slist.PushFront(types.NewSample(inputName, "driver_name", driver_name, labels))
 		slist.PushFront(types.NewSample(inputName, "driver_total_size", driver_total_size, labels))
 		slist.PushFront(types.NewSample(inputName, "driver_free_size", driver_free_size, labels))
 		slist.PushFront(types.NewSample(inputName, "load_one_average", load_one_average, labels))

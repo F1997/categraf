@@ -24,7 +24,7 @@ import (
 	_ "github.com/F1997/categraf/inputs/disk"
 	_ "github.com/F1997/categraf/inputs/diskio"
 
-	// _ "github.com/F1997/categraf/inputs/dm"
+	_ "github.com/F1997/categraf/inputs/dm"
 	_ "github.com/F1997/categraf/inputs/dns_query"
 	_ "github.com/F1997/categraf/inputs/docker"
 	_ "github.com/F1997/categraf/inputs/elasticsearch"

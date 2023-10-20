@@ -29,7 +29,7 @@ func (ins *Instance) gatherTableSizeRate(slist *types.SampleList, db *sql.DB, gl
 		var used_gb float64
 		var free_gb float64
 		var total_gb float64
-		var per_free string
+		var per_free float64
 
 		err = rows.Scan(&tablespace_name, &used_gb, &free_gb, &total_gb, &per_free)
 		if err != nil {
@@ -66,7 +66,7 @@ func (ins *Instance) gatherTableSizeUseRate(slist *types.SampleList, db *sql.DB,
 		var tablespace_name string
 		var total_mb float64
 		var free_mb float64
-		var usage string
+		var usage float64
 
 		err = rows.Scan(&tablespace_name, &total_mb, &free_mb, &usage)
 		if err != nil {

@@ -36,7 +36,7 @@ func (ins *Instance) gatherMemoryUsage(slist *types.SampleList, db *sql.DB, glob
 		}
 
 		// slist.PushFront(types.NewSample(inputName, "info_schema_basic", para_name, labels, map[string]string{"para_value": para_value}))
-		slist.PushFront(types.NewSample("dm_mem_", "total_mb", total_mb, labels, map[string]string{"name": name}))
+		slist.PushFront(types.NewSample(inputName, "mem_total_mb", total_mb, labels, map[string]string{"name": name}))
 		slist.PushFront(types.NewSample(inputName, "mem_pool", mem_pool, labels, map[string]string{"name": name}))
 
 	}
